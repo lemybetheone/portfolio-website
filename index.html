@@ -269,7 +269,7 @@
       <h3>Formula 1 analytics pipeline</h3>
       <p>Every Formula 1 season since 1950, pulled from a rate-limited public API, landed immutably in S3, loaded into Postgres, and modelled into a tested Kimball star schema with dbt. Orchestrated nightly by Airflow, served through Metabase.</p>
       <p><strong>The part worth reading.</strong>One dbt test derives each championship total from the race and sprint facts and compares it against the official standings. It failed — 437 official points against 399 derived for the 2024 season — because sprint points were missing entirely. The test found a defect a row count never would have.</p>
-      <p><strong>Why the full history mattered.</strong>Backfilling seventy-seven seasons takes about seven and a half hours against a 500-request-per-hour budget, and it is the reason the data has anything to say: DNF rates fall from 49% in the 1950s to 13% today, with a bump in the 1980s exactly where the turbo era belongs.</p>
+      <p><strong>Why the full history mattered.</strong>Backfilling every season since 1950 takes about seven and a half hours against a 500-request-per-hour budget, and it is the reason the data has anything to say: DNF rates fall from 49% in the 1950s to 13% in the 2020s, with a bump in the 1980s exactly where the turbo era belongs.</p>
       <p><strong>Decisions are written down.</strong>Sprint results are a separate fact table rather than a <code>session_type</code> column, because a fact whose grain needs a filter to be correct is a reliable source of wrong numbers. The alternatives that lost are logged in the repository.</p>
       <p><a class="go" href="https://github.com/lemybetheone/f1-analytics-pipeline">Read the project &rarr;</a></p>
     </article>
