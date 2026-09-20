@@ -97,6 +97,17 @@
     border:1px solid var(--rule);background:var(--bg);padding:.35rem .7rem;margin:0 0 1.75rem;
   }
   .avail::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--accent)}
+  .herogrid{display:grid;gap:2rem;align-items:start}
+  @media (min-width:44rem){
+    .herogrid{grid-template-columns:1fr 15rem;gap:2.75rem}
+    .portrait{order:2}
+  }
+  .portrait{
+    margin:0;max-width:14rem;border:1px solid var(--rule);
+    background:#edece8;line-height:0;
+  }
+  .portrait img{width:100%;height:auto;display:block}
+
   h1{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     margin:0 0 1.25rem;font-size:clamp(2rem,8vw,3.25rem);font-weight:700;
@@ -235,6 +246,11 @@
 
   <div class="hero" id="top">
     <div class="wrap">
+      <div class="herogrid">
+      <figure class="portrait">
+        <img src="assets/portrait.jpg" width="560" height="697" alt="Lemuel Calinog" decoding="async">
+      </figure>
+      <div>
       <p class="avail">Open to data engineering roles</p>
       <h1>Lemuel Calinog</h1>
       <p>I&rsquo;m Lemy! I build the layer the business reports from. <strong>Python ingestion, dimensional modelling on Google Cloud, and the reporting layer on top.</strong></p>
@@ -244,6 +260,8 @@
         <a href="https://www.linkedin.com/in/lemuelcalinog/">linkedin</a>
         <a href="mailto:lemuelcalinog@gmail.com">email</a>
       </p>
+      </div>
+      </div>
     </div>
   </div>
 

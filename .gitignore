@@ -32,3 +32,9 @@ linkedin-*.txt
 
 # Design explorations — only the chosen one becomes index.html
 designs/
+
+# Source photography — the optimised derivative is committed instead.
+assets/*.jpg
+
+# ...except the cropped portrait the site displays.
+!assets/portrait.jpg
