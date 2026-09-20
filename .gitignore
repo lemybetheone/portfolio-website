@@ -7,7 +7,7 @@ PROFILE.private.md
 PROFILE*.md
 
 # Content drafts carry meta-commentary and open questions.
-CONTENT.draft.md
+*.draft.md
 
 # OS and editor noise
 .DS_Store
@@ -18,3 +18,17 @@ desktop.ini
 
 # Vercel
 .vercel
+
+# CV files carry a phone number and email address.
+# They must never be committed to a public repository.
+*.docx
+*.pdf
+
+# ...except the public one the site links to. It has no phone number.
+!assets/lemuel-calinog-cv.pdf
+
+# Paste-ready profile copy — working files, not site content.
+linkedin-*.txt
+
+# Design explorations — only the chosen one becomes index.html
+designs/
