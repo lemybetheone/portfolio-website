@@ -186,19 +186,6 @@
   }
   @media (prefers-reduced-motion:reduce){ .chips li{transition:none} }
 
-  /* ---------- workflow ---------- */
-  ol.flow{margin:0;padding:0;list-style:none;counter-reset:f}
-  ol.flow li{
-    counter-increment:f;position:relative;padding-left:2.5rem;margin:0 0 1.35rem;font-size:.9375rem;color:var(--muted);
-  }
-  ol.flow li:last-child{margin-bottom:0}
-  ol.flow li::before{
-    content:counter(f,decimal-leading-zero);position:absolute;left:0;top:.05rem;
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-size:.75rem;color:var(--accent);letter-spacing:.06em;
-  }
-  ol.flow strong{display:block;color:var(--ink);font-weight:650;margin-bottom:.15rem;font-size:1rem}
-
   /* ---------- experience ---------- */
   /* negative margin + matching padding: the hover tint gets breathing room
      without the text shifting position when it appears */
@@ -335,20 +322,9 @@
     </ul>
   </section>
 
-  <section id="workflow" class="wrap">
-    <div class="shead"><h2>03 — <b>how i work</b></h2></div>
-    <ol class="flow">
-      <li><strong>Nothing reaches production by hand.</strong>Ingestion, infrastructure, modelling and transformation live in separate version-controlled repositories, each under pull-request review with continuous integration.</li>
-      <li><strong>Every model declares and tests its grain.</strong>The tests worth writing are business rules, not structural ones — a reconciliation test found a real defect that a row count would have passed.</li>
-      <li><strong>Loads are idempotent and replayable.</strong>An immutable landing zone means the warehouse can be rebuilt without re-spending an API budget, and re-running any step changes nothing.</li>
-      <li><strong>Pipelines report their own failures.</strong>Scheduled, retried per task, with failed records captured rather than silently dropped.</li>
-      <li><strong>Decisions are written down.</strong>What was chosen, what was rejected, and why — so the reasoning survives the person who had it.</li>
-    </ol>
-  </section>
-
-  <section id="experience" class="wrap">
+<section id="experience" class="wrap">
     <div class="shead">
-      <h2>04 — <b>experience</b></h2>
+      <h2>03 — <b>experience</b></h2>
       <a href="assets/lemuel-calinog-cv.pdf">full history &rarr;</a>
     </div>
     <div class="xp"><div class="yr">2022 —</div><div><div class="role">Data Analyst</div><div class="org">Data warehouse build · Manila</div></div></div>
@@ -359,7 +335,7 @@
   </section>
 
   <section id="contact" class="wrap">
-    <div class="shead"><h2>05 — <b>contact</b></h2></div>
+    <div class="shead"><h2>04 — <b>contact</b></h2></div>
     <p>The quickest way to reach me is email. I read everything, and I reply.</p>
     <div class="cta">
       <a class="btn btn-solid" href="mailto:lemuelcalinog@gmail.com">Email me</a>

@@ -234,6 +234,25 @@ application carries the same URL.
 
 ---
 
+## 16 — The "how I work" section was removed
+
+**Chosen:** four sections — projects, stack, experience, contact.
+
+**Rejected:** a fifth section listing engineering practice (version control and
+review, idempotent loads, tests that are business rules, decisions written
+down).
+
+The case for keeping it was that it was the only section answering "what will
+this person be like on my team" rather than "what have they done". The case
+against won: it was assertion rather than evidence, and self-description is
+the weakest form of persuasion. Two of its five points also duplicated the F1
+project section directly above it.
+
+The practices themselves are unchanged and visible in the F1 repository,
+which is where a reader can verify them rather than take his word for it.
+
+---
+
 ## October checklist — the custom domain switch
 
 Four things change together. Missing any one leaves a broken or inconsistent
