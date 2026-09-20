@@ -1,0 +1,20 @@
+# Working documents — never published.
+# CLAUDE.md and PROFILE*.md foreground AI assistance and honest skill
+# calibration. Neither belongs in a portfolio artifact.
+CLAUDE.md
+PROFILE.md
+PROFILE.private.md
+PROFILE*.md
+
+# Content drafts carry meta-commentary and open questions.
+CONTENT.draft.md
+
+# OS and editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# Vercel
+.vercel
