@@ -129,12 +129,20 @@
     .herogrid{grid-template-columns:1fr 15rem;gap:2.75rem}
     .portrait{order:2}
   }
+  /* The portrait is a background image so each theme fetches only its own
+     file. An <img> pair would download both, and <picture> cannot see the
+     manual data-theme toggle - only the OS preference. */
   .portrait{
-    margin:0;max-width:14rem;border:1px solid var(--rule);
-    background:#edece8;line-height:0;
-    border-radius:var(--r-lg);overflow:hidden;
+    margin:0;max-width:14rem;width:100%;aspect-ratio:560/697;
+    border:1px solid var(--rule);border-radius:var(--r-lg);
+    background:#edece8 center/cover no-repeat;
+    background-image:url(assets/portrait.jpg);
   }
-  .portrait img{width:100%;height:auto;display:block}
+  @media (prefers-color-scheme:light){
+    :root:not([data-theme="dark"]) .portrait{background-image:url(assets/portrait-light.jpg)}
+  }
+  :root[data-theme="light"] .portrait{background-image:url(assets/portrait-light.jpg)}
+  :root[data-theme="dark"] .portrait{background-image:url(assets/portrait.jpg)}
 
   h1{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -335,9 +343,7 @@
   <div class="hero" id="top">
     <div class="wrap">
       <div class="herogrid">
-      <figure class="portrait">
-        <img src="assets/portrait.jpg" width="560" height="697" alt="Lemuel Calinog" decoding="async">
-      </figure>
+      <div class="portrait" role="img" aria-label="Lemuel Calinog"></div>
       <div>
       <p class="avail">Open to data engineering roles</p>
       <h1>Lemuel Calinog</h1>

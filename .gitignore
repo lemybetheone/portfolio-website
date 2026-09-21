@@ -38,3 +38,7 @@ assets/*.jpg
 
 # ...except the cropped portrait the site displays.
 !assets/portrait.jpg
+!assets/portrait-light.jpg
+
+# Source photography in other formats too.
+assets/*.jpeg
