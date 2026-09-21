@@ -29,6 +29,8 @@
     --bg:#0b0c0e; --raised:#121418; --ink:#f2f3f5; --muted:#8a9099;
     --rule:#23262b; --accent:#e8564a; --dot:rgba(255,255,255,.07);
     --chip:#15181c;
+    /* one radius scale for the whole page */
+    --r-sm:4px; --r-md:6px; --r-lg:9px;
   }
   @media (prefers-color-scheme:light){
     :root:not([data-theme="dark"]){
@@ -74,6 +76,7 @@
   #theme-toggle{
     border:1px solid var(--rule);background:transparent;color:var(--ink);
     width:1.9rem;height:1.9rem;cursor:pointer;font-size:.8rem;line-height:1;
+    border-radius:var(--r-sm);
     display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
   }
   @media (max-width:34rem){
@@ -95,6 +98,7 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:.6875rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
     border:1px solid var(--rule);background:var(--bg);padding:.35rem .7rem;margin:0 0 1.75rem;
+    border-radius:var(--r-md);
   }
   .avail::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--accent)}
   .herogrid{display:grid;gap:2rem;align-items:start}
@@ -105,6 +109,7 @@
   .portrait{
     margin:0;max-width:14rem;border:1px solid var(--rule);
     background:#edece8;line-height:0;
+    border-radius:var(--r-lg);overflow:hidden;
   }
   .portrait img{width:100%;height:auto;display:block}
 
@@ -153,13 +158,17 @@
   .shead a:hover{color:var(--accent)}
 
   /* ---------- projects ---------- */
-  .proj{border:1px solid var(--rule);background:var(--raised);padding:1.5rem;margin:0 0 1rem}
+  .proj{
+    border:1px solid var(--rule);background:var(--raised);
+    padding:1.5rem;margin:0 0 1rem;border-radius:var(--r-lg);
+  }
   .proj:last-child{margin-bottom:0}
   .tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:0 0 .9rem}
   .tag{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:.5625rem;letter-spacing:.11em;text-transform:uppercase;
     border:1px solid var(--rule);color:var(--muted);padding:.22rem .45rem;
+    border-radius:var(--r-sm);
   }
   .tag-hot{border-color:var(--accent);color:var(--accent)}
   .proj h3{margin:0 0 .6rem;font-size:1.25rem;font-weight:650;letter-spacing:-.01em}
@@ -190,6 +199,7 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:.8125rem;background:var(--chip);border:1px solid var(--rule);
     padding:.35rem .65rem;color:var(--ink);
+    border-radius:var(--r-sm);
     transition:border-color .16s ease;
   }
   /* hover:hover keeps this off touch screens, where :hover sticks after a tap */
@@ -205,6 +215,7 @@
     display:grid;grid-template-columns:5.5rem 1fr;gap:1rem;
     padding:1rem .75rem;margin-left:-.75rem;margin-right:-.75rem;
     border-bottom:1px solid var(--rule);
+    border-radius:var(--r-md);
     transition:background-color .16s ease;
   }
   @media (hover:hover){
@@ -228,6 +239,7 @@
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
     padding:.7rem 1.15rem;text-decoration:none;border:1px solid var(--accent);
+    border-radius:var(--r-md);
   }
   .btn-solid{background:var(--accent);color:#fff}
   .btn-ghost{color:var(--accent)}
