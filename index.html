@@ -98,7 +98,7 @@
   nav a:hover{color:var(--ink)}
   #theme-toggle{
     border:1px solid var(--rule);background:transparent;color:var(--ink);
-    width:1.9rem;height:1.9rem;cursor:pointer;font-size:.8rem;line-height:1;
+    width:1.75rem;height:1.75rem;cursor:pointer;font-size:.8rem;line-height:1;
     border-radius:var(--r-sm);
     display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
   }
@@ -257,16 +257,51 @@
   @media (max-width:26rem){ .xp{grid-template-columns:1fr;gap:.2rem} }
 
   /* ---------- contact ---------- */
-  .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
-  .btn{
-    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-    font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
-    padding:.7rem 1.15rem;text-decoration:none;border:1px solid var(--accent);
-    border-radius:var(--r-md);
+  .panels{display:grid;gap:.75rem;margin:1.5rem 0 0}
+  /* Above 40rem the panels size to their content and sit left, rather than
+     each filling half the row and leaving dead space beside the icon.
+     align-items:stretch keeps them the same height. */
+  @media (min-width:40rem){
+    .panels{display:flex;flex-wrap:wrap;align-items:stretch}
+    .panel{flex:0 0 auto}
   }
-  .btn-solid{background:var(--accent);color:#fff}
-  .btn-ghost{color:var(--accent)}
-
+  .panel{
+    display:flex;flex-direction:column;justify-content:center;
+    border:1px solid var(--rule);border-radius:var(--r-md);
+    background:var(--raised);padding:.6rem .8rem;text-decoration:none;
+    transition:border-color .18s ease, transform .18s ease;
+  }
+  /* transform does not reflow, so the neighbouring panel never shifts */
+  @media (hover:hover){ .panel:hover{border-color:var(--ink);transform:scale(1.025)} }
+  @media (prefers-reduced-motion:reduce){ .panel{transition:none} .panel:hover{transform:none} }
+  .panel-sub{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.75rem;color:var(--muted);display:block;
+    line-height:1.35;margin-top:.15rem;overflow-wrap:anywhere;
+  }
+  .panel-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
+  /* label and value stack on the left; the button centres against the panel
+     rather than sitting on the value line */
+  .panel--split{flex-direction:row;align-items:center;justify-content:space-between;gap:.75rem}
+  .panel-main{min-width:0}
+  .panel-value{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.9375rem;font-weight:600;color:var(--ink);text-decoration:none;
+    display:block;line-height:1.3;overflow-wrap:anywhere;
+  }
+  .panel-icon{flex-shrink:0;color:var(--muted);display:inline-flex;line-height:0}
+  .panel:hover .panel-icon{color:var(--ink)}
+  #copy-email{
+    flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;
+    width:1.9rem;height:1.9rem;cursor:pointer;
+    background:transparent;color:var(--muted);
+    border:1px solid var(--rule);border-radius:var(--r-sm);
+    transition:border-color .16s ease, color .16s ease;
+  }
+  #copy-email svg{pointer-events:none}
+  #copy-email.done{color:var(--accent);border-color:var(--accent)}
+  @media (hover:hover){ #copy-email:hover{border-color:var(--ink);color:var(--ink)} }
+  @media (prefers-reduced-motion:reduce){ #copy-email{transition:none} }
   footer{
     padding-top:2rem;padding-bottom:3rem;color:var(--muted);
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.6875rem;
@@ -410,10 +445,28 @@
   <section id="contact" class="wrap">
     <div class="shead"><h2>04 — <b>contact</b></h2></div>
     <p>The quickest way to reach me is email. I read everything, and I reply.</p>
-    <div class="cta">
-      <a class="btn btn-solid" href="mailto:lemuelcalinog@gmail.com">Email me</a>
-      <a class="btn btn-ghost" href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">Download résumé<span class="sr-only"> (opens in a new tab)</span></a>
+    <div class="panels">
+
+      <div class="panel panel--split">
+        <div class="panel-main">
+          <a class="panel-value" href="mailto:lemuelcalinog@gmail.com">Email me</a>
+          <span class="panel-sub">lemuelcalinog@gmail.com</span>
+        </div>
+          <button id="copy-email" type="button" data-email="lemuelcalinog@gmail.com" aria-label="Copy email address">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+      </div>
+
+      <a class="panel" href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">
+        <div class="panel-row">
+          <span class="panel-value">Download résumé</span>
+          <span class="panel-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        </div>
+        <span class="sr-only"> (opens in a new tab)</span>
+      </a>
+
     </div>
+    <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
   </section>
 
 </main>
@@ -457,6 +510,45 @@
   });
   icon.addEventListener('animationend',function(){ icon.classList.remove('swap'); });
   sync();
+})();
+</script>
+
+<script>
+(function(){
+  var btn=document.getElementById('copy-email');
+  var status=document.getElementById('copy-status');
+  if(!btn)return;
+  var copyIcon=btn.innerHTML, timer;
+  var tick='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+  function say(msg){ if(status) status.textContent=msg; }
+  function done(ok){
+    if(ok){ btn.innerHTML=tick; btn.classList.add('done'); }
+    say(ok ? 'Email address copied' : 'Could not copy. Select the address instead.');
+    clearTimeout(timer);
+    timer=setTimeout(function(){
+      btn.innerHTML=copyIcon; btn.classList.remove('done'); say('');
+    }, 1900);
+  }
+  btn.addEventListener('click',function(){
+    var email=btn.getAttribute('data-email');
+    // navigator.clipboard needs a secure context and can be refused;
+    // fall back to a hidden textarea rather than failing silently.
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(email).then(function(){ done(true); },
+                                               function(){ legacy(email); });
+    } else { legacy(email); }
+  });
+  function legacy(email){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=email; ta.setAttribute('readonly','');
+      ta.style.position='absolute'; ta.style.left='-9999px';
+      document.body.appendChild(ta); ta.select();
+      var ok=document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(ok);
+    }catch(e){ done(false); }
+  }
 })();
 </script>
 
