@@ -173,6 +173,18 @@
   }
 
   /* ---------- stack ---------- */
+  .stack{margin:0}
+  .stackrow{margin:0 0 1.35rem}
+  .stackrow:last-child{margin-bottom:0}
+  .stacklabel{
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    font-size:.625rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--muted);margin:0 0 .55rem;
+  }
+  @media (min-width:44rem){
+    .stackrow{display:grid;grid-template-columns:11rem 1fr;gap:1.5rem;align-items:start}
+    .stacklabel{margin:.35rem 0 0}
+  }
   .chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:0;padding:0;list-style:none}
   .chips li{
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -314,12 +326,38 @@
 
   <section id="stack" class="wrap">
     <div class="shead"><h2>02 — <b>stack</b></h2></div>
-    <ul class="chips">
-      <li>Python</li><li>SQL</li><li>BigQuery</li><li>Dataform</li><li>dbt</li>
-      <li>Cloud Run</li><li>Airflow</li><li>PostgreSQL</li><li>AWS S3</li><li>Docker</li>
-      <li>Git</li><li>GitHub Actions</li><li>Zoho Analytics</li><li>Looker Studio</li><li>Metabase</li>
-      <li>Kimball</li><li>Medallion</li>
-    </ul>
+    <div class="stack">
+      <div class="stackrow">
+        <p class="stacklabel">Languages</p>
+        <ul class="chips">
+          <li>Python</li><li>SQL</li>
+        </ul>
+      </div>
+      <div class="stackrow">
+        <p class="stacklabel">Cloud &amp; storage</p>
+        <ul class="chips">
+          <li>Google Cloud</li><li>BigQuery</li><li>Cloud Run</li><li>AWS S3</li><li>PostgreSQL</li>
+        </ul>
+      </div>
+      <div class="stackrow">
+        <p class="stacklabel">Transformation &amp; orchestration</p>
+        <ul class="chips">
+          <li>Dataform</li><li>dbt</li><li>Airflow</li>
+        </ul>
+      </div>
+      <div class="stackrow">
+        <p class="stacklabel">Serving</p>
+        <ul class="chips">
+          <li>Zoho Analytics</li><li>Looker Studio</li><li>Metabase</li>
+        </ul>
+      </div>
+      <div class="stackrow">
+        <p class="stacklabel">Workflow</p>
+        <ul class="chips">
+          <li>Git</li><li>GitHub Actions</li><li>Docker</li>
+        </ul>
+      </div>
+    </div>
   </section>
 
 <section id="experience" class="wrap">
