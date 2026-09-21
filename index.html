@@ -56,6 +56,10 @@
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.9em}
 
+  .sr-only{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+  }
   .skip{position:absolute;left:-9999px}
   .skip:focus{left:1rem;top:1rem;z-index:20;background:var(--raised);padding:.6rem 1rem;border:1px solid var(--rule)}
 
@@ -264,7 +268,7 @@
         <li><a href="#top">home</a></li>
         <li><a href="#projects">projects</a></li>
         <li><a href="#experience">experience</a></li>
-        <li><a href="assets/lemuel-calinog-cv.pdf">résumé</a></li>
+        <li><a href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">résumé<span class="sr-only"> (opens in a new tab)</span></a></li>
         <li><a href="#contact">contact</a></li>
       </ul>
     </nav>
@@ -286,8 +290,8 @@
       <p>I&rsquo;m Lemy! I build the layer the business reports from. <strong>Python ingestion, dimensional modelling on Google Cloud, and the reporting layer on top.</strong></p>
       <p>In analytics since 2022, now working mostly in data engineering. Nine years at the same company, promoted from operations into data.</p>
       <p class="herolinks mono">
-        <a href="https://github.com/lemybetheone">github</a>
-        <a href="https://www.linkedin.com/in/lemuelcalinog/">linkedin</a>
+        <a href="https://github.com/lemybetheone" target="_blank" rel="noopener noreferrer">github<span class="sr-only"> (opens in a new tab)</span></a>
+        <a href="https://www.linkedin.com/in/lemuelcalinog/" target="_blank" rel="noopener noreferrer">linkedin<span class="sr-only"> (opens in a new tab)</span></a>
         <a href="mailto:lemuelcalinog@gmail.com">email</a>
       </p>
       </div>
@@ -306,7 +310,7 @@
   <section id="projects" class="wrap">
     <div class="shead">
       <h2>01 — <b>projects</b></h2>
-      <a href="https://github.com/lemybetheone">all repos &rarr;</a>
+      <a href="https://github.com/lemybetheone" target="_blank" rel="noopener noreferrer">all repos &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
 
     <article class="proj">
@@ -319,7 +323,7 @@
       <p><strong>The part worth reading.</strong>One dbt test derives each championship total from the race and sprint facts and compares it against the official standings. It failed — 437 official points against 399 derived for the 2024 season — because sprint points were missing entirely. The test found a defect a row count never would have.</p>
       <p><strong>Why the full history mattered.</strong>Backfilling every season since 1950 takes about seven and a half hours against a 500-request-per-hour budget, and it is the reason the data has anything to say: DNF rates fall from 49% in the 1950s to 13% in the 2020s, with a bump in the 1980s exactly where the turbo era belongs.</p>
       <p><strong>Decisions are written down.</strong>Sprint results are a separate fact table rather than a <code>session_type</code> column, because a fact whose grain needs a filter to be correct is a reliable source of wrong numbers. The alternatives that lost are logged in the repository.</p>
-      <p><a class="go" href="https://github.com/lemybetheone/f1-analytics-pipeline">Read the project &rarr;</a></p>
+      <p><a class="go" href="https://github.com/lemybetheone/f1-analytics-pipeline" target="_blank" rel="noopener noreferrer">Read the project &rarr;<span class="sr-only"> (opens in a new tab)</span></a></p>
     </article>
 
     <article class="proj">
@@ -375,7 +379,7 @@
 <section id="experience" class="wrap">
     <div class="shead">
       <h2>03 — <b>experience</b></h2>
-      <a href="assets/lemuel-calinog-cv.pdf">full history &rarr;</a>
+      <a href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">full history &rarr;<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
     <div class="xp"><div class="yr">2022 —</div><div><div class="role">Data Analyst</div><div class="org">Data warehouse build · Manila</div></div></div>
     <div class="xp"><div class="yr">2020 — 2022</div><div><div class="role">Team Leader</div><div class="org">Operations · Makati</div></div></div>
@@ -389,7 +393,7 @@
     <p>The quickest way to reach me is email. I read everything, and I reply.</p>
     <div class="cta">
       <a class="btn btn-solid" href="mailto:lemuelcalinog@gmail.com">Email me</a>
-      <a class="btn btn-ghost" href="assets/lemuel-calinog-cv.pdf">Download résumé</a>
+      <a class="btn btn-ghost" href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">Download résumé<span class="sr-only"> (opens in a new tab)</span></a>
     </div>
   </section>
 
