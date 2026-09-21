@@ -60,6 +60,25 @@
     position:absolute;width:1px;height:1px;padding:0;margin:-1px;
     overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
   }
+  /* Theme crossfade.
+     The transition is applied only while .theme-anim is on <html>, added on
+     toggle and removed once it finishes. Transitioning colours permanently
+     would make the first paint fade in and slow ordinary hovers. */
+  .theme-anim, .theme-anim *{
+    transition:background-color .28s ease, color .28s ease,
+               border-color .28s ease, fill .28s ease !important;
+  }
+  #theme-icon{display:inline-block;line-height:1}
+  #theme-icon.swap{animation:icon-swap .34s ease}
+  @keyframes icon-swap{
+    from{transform:rotate(-140deg) scale(.6);opacity:0}
+    to{transform:rotate(0) scale(1);opacity:1}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .theme-anim, .theme-anim *{transition:none !important}
+    #theme-icon.swap{animation:none}
+  }
+
   .skip{position:absolute;left:-9999px}
   .skip:focus{left:1rem;top:1rem;z-index:20;background:var(--raised);padding:.6rem 1rem;border:1px solid var(--rule)}
 
@@ -272,7 +291,7 @@
         <li><a href="#contact">contact</a></li>
       </ul>
     </nav>
-    <button id="theme-toggle" type="button" aria-label="Switch colour theme">☀</button>
+    <button id="theme-toggle" type="button" aria-label="Switch colour theme"><span id="theme-icon">☀</span></button>
   </div>
 </header>
 
@@ -407,22 +426,36 @@
 (function(){
   var root=document.documentElement;
   var btn=document.getElementById('theme-toggle');
-  if(!btn)return;
+  var icon=document.getElementById('theme-icon');
+  if(!btn||!icon)return;
+  var timer;
   function current(){
     return root.getAttribute('data-theme') ||
       (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
   }
   function sync(){
     var c=current();
-    btn.textContent = c==='dark' ? '☀' : '☾';
+    icon.textContent = c==='dark' ? '☀' : '☾';
     btn.setAttribute('aria-label', c==='dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
   btn.addEventListener('click',function(){
     var next = current()==='dark' ? 'light' : 'dark';
+
+    // fade the colours only for the duration of the change
+    root.classList.add('theme-anim');
+    clearTimeout(timer);
+    timer=setTimeout(function(){ root.classList.remove('theme-anim'); }, 340);
+
+    // restart the icon animation even on rapid clicks
+    icon.classList.remove('swap');
+    void icon.offsetWidth;
+    icon.classList.add('swap');
+
     root.setAttribute('data-theme', next);
     try{ localStorage.setItem('theme', next); }catch(e){}
     sync();
   });
+  icon.addEventListener('animationend',function(){ icon.classList.remove('swap'); });
   sync();
 })();
 </script>
