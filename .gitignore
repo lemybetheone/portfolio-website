@@ -40,6 +40,7 @@ assets/*.jpg
 !assets/portrait.jpg
 !assets/portrait-light.jpg
 !assets/portrait-full.jpg
+!assets/portrait-full-light.jpg
 
 # Source photography in other formats too.
 assets/*.jpeg

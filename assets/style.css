@@ -210,12 +210,16 @@
       font-size:clamp(2rem,11vw,3.25rem);line-height:1.05;
     }
   }
-  /* a light theme wash is pale, so its glass needs a dark edge instead */
+  /* Each theme gets its own frame, as .portrait already does, so only the one
+     in use is fetched. A light wash is pale, so its glass needs a dark edge. */
   @media (max-width:43.98rem){
+    :root[data-theme="light"] .hero{background-image:url(portrait-full-light.jpg)}
+    :root[data-theme="dark"] .hero{background-image:url(portrait-full.jpg)}
     :root[data-theme="light"] .hero .avail,
     :root[data-theme="light"] .herolinks a{border-color:rgba(0,0,0,.18)}
   }
   @media (max-width:43.98rem) and (prefers-color-scheme:light){
+    :root:not([data-theme="dark"]) .hero{background-image:url(portrait-full-light.jpg)}
     :root:not([data-theme="dark"]) .hero .avail,
     :root:not([data-theme="dark"]) .herolinks a{border-color:rgba(0,0,0,.18)}
   }
@@ -375,7 +379,12 @@
   .fignote{margin:.9rem 0 0;font-size:.875rem;color:var(--muted)}
 
   .dot{width:.35rem;height:.35rem;border-radius:50%;background:var(--muted);flex-shrink:0}
-  .stackgrid{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));align-items:start}
+  /* Columns, not grid. Grid gives every card in a row the same row height, so a
+     two-item card beside a five-item one left dead space beneath it. Columns let
+     each card take only the height it needs and pack the next one under it.
+     column-width behaves like the old minmax: as many columns as fit. */
+  .stackgrid{columns:9.5rem;column-gap:.7rem}
+  .stackgrid .ent{break-inside:avoid;-webkit-column-break-inside:avoid;margin-bottom:.7rem}
   .stackgrid .ent li{transition:background-color .16s ease}
   .stackgrid .dot{transition:background-color .16s ease}
   /* hover:hover keeps this off touch screens, where :hover sticks after a tap */
