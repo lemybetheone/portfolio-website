@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Projects — Lemuel Calinog</title>
+<meta name="description" content="Two data engineering builds in full: a Formula 1 analytics pipeline modelled into a tested star schema, and a data warehouse on Google Cloud.">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Projects — Lemuel Calinog">
+<meta property="og:description" content="Two data engineering builds in full: a Formula 1 analytics pipeline modelled into a tested star schema, and a data warehouse on Google Cloud.">
+<meta property="og:url" content="https://lemybetheone.vercel.app/projects.html">
+<!-- og:image must be an absolute URL: LinkedIn will not resolve a relative one.
+     If the site moves to a custom domain, this line and og:url must change. -->
+<meta property="og:image" content="https://lemybetheone.vercel.app/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lemuel Calinog — building the layer the business reports from.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();
+</script>
+
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="index.html">Lemuel Calinog</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html">home</a></li>
+        <li><a href="projects.html" aria-current="page">projects</a></li>
+        <li><a href="index.html#experience">experience</a></li>
+        <li><a href="assets/lemuel-calinog-cv.pdf" target="_blank" rel="noopener noreferrer">résumé<span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="index.html#contact">contact</a></li>
+      </ul>
+    </nav>
+    <button id="theme-toggle" type="button" aria-label="Switch colour theme"><span id="theme-icon">☀</span></button>
+  </div>
+</header>
+
+<main id="main">
+
+  <div class="wrap pagehead">
+    <p class="crumb"><a href="index.html">home</a> / projects</p>
+    <h1>Projects</h1>
+    <p class="deck">Two builds. One I made alone, where you can read every line. One at work, where the code is internal and what I can show you is the design and the decisions.</p>
+    <p class="herolinks mono">
+      <a href="https://github.com/lemybetheone" target="_blank" rel="noopener noreferrer">all repos<span class="sr-only"> (opens in a new tab)</span></a>
+    </p>
+  </div>
+
+  <article id="f1" class="caseblock">
+    <div class="wrap casehead">
+      <h2>Formula 1 analytics pipeline</h2>
+      <p class="deck">Every Formula 1 season since 1950, pulled from a rate-limited public API, landed immutably in S3, loaded into Postgres, and modelled into a tested Kimball star schema with dbt. Orchestrated nightly by Airflow, served through Metabase.</p>
+      <p><a class="cta" href="https://github.com/lemybetheone/f1-analytics-pipeline" target="_blank" rel="noopener noreferrer">read the project &#8599;<span class="sr-only"> (opens in a new tab)</span></a></p>
+      <dl class="meta">
+        <div><dt>built</dt><dd>Solo, end to end</dd></div>
+        <div><dt>stack</dt><dd>dbt, Airflow, S3, Postgres, Metabase</dd></div>
+        <div><dt>grain</dt><dd>One row per driver, per race</dd></div>
+        <div><dt>coverage</dt><dd>1950 &rarr; current season</dd></div>
+      </dl>
+    </div>
+
+  <section class="wrap">
+    <div class="shead"><h3>01 — <b>the pipeline</b></h3></div>
+    <p class="caseintro">The API is rate limited to 500 requests an hour, so the landing zone is immutable: raw responses go to S3 once and are never re-fetched. Everything downstream can be rebuilt from that copy without spending the budget again.</p>
+    <div class="flow">
+      <div class="node">
+        <p class="nlabel">source</p>
+        <p class="nname">public API</p>
+        <p class="nsub">500 requests / hour</p>
+      </div>
+      <span class="arrow" aria-hidden="true"><svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 5 H17"/><path d="M13 1 L17 5 L13 9"/></svg></span>
+      <div class="node">
+        <p class="nlabel">landing</p>
+        <p class="nname">S3</p>
+        <p class="nsub">Immutable raw responses</p>
+      </div>
+      <span class="arrow" aria-hidden="true"><svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 5 H17"/><path d="M13 1 L17 5 L13 9"/></svg></span>
+      <div class="node">
+        <p class="nlabel">warehouse</p>
+        <p class="nname">Postgres</p>
+        <p class="nsub">Loaded, then staged</p>
+      </div>
+      <span class="arrow" aria-hidden="true"><svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 5 H17"/><path d="M13 1 L17 5 L13 9"/></svg></span>
+      <div class="node node--model">
+        <p class="nlabel">model</p>
+        <p class="nname">dbt star schema</p>
+        <p class="nsub">Facts, dimensions, tests</p>
+      </div>
+      <span class="arrow" aria-hidden="true"><svg width="22" height="10" viewBox="0 0 22 10" fill="none" stroke="currentColor" stroke-width="1"><path d="M0 5 H17"/><path d="M13 1 L17 5 L13 9"/></svg></span>
+      <div class="node">
+        <p class="nlabel">serving</p>
+        <p class="nname">Metabase</p>
+        <p class="nsub">Dashboards, ad hoc SQL</p>
+      </div>
+    </div>
+    <p class="orch"><b>orchestration</b> Airflow &mdash; nightly, one DAG per stage, retries on the rate limit</p>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>02 — <b>the model</b></h3></div>
+    <p class="caseintro">Two fact tables at different grains, sharing conformed dimensions. Sprint results are a separate fact rather than a <code>session_type</code> column, because a fact whose grain needs a filter to be correct is a reliable source of wrong numbers.</p>
+      <figure class="fig">
+        <div class="erd">
+          <div class="erdcol">
+        <div class="ent ent--fact">
+          <div class="entname">fct_race_result <span class="kind">fact</span></div>
+          <ul>
+            <li><span class="key">FK</span>race_key <span class="ref">&rarr; dim_race</span></li>
+            <li><span class="key">FK</span>driver_key <span class="ref">&rarr; dim_driver</span></li>
+            <li><span class="key">FK</span>constructor_key <span class="ref">&rarr; dim_constructor</span></li>
+            <li><span class="key key--none"></span>finish_position</li>
+            <li><span class="key key--none"></span>points</li>
+            <li><span class="key key--none"></span>status</li>
+          </ul>
+        </div>
+        <div class="ent ent--fact">
+          <div class="entname">fct_sprint_result <span class="kind">fact</span></div>
+          <ul>
+            <li><span class="key">FK</span>race_key <span class="ref">&rarr; dim_race</span></li>
+            <li><span class="key">FK</span>driver_key <span class="ref">&rarr; dim_driver</span></li>
+            <li><span class="key key--none"></span>points</li>
+          </ul>
+        </div>
+          </div>
+          <div class="erdcol">
+        <div class="ent">
+          <div class="entname">dim_driver <span class="kind">dim</span></div>
+          <ul>
+            <li><span class="key key--pk">PK</span>driver_key</li>
+            <li><span class="key key--none"></span>driver_name</li>
+            <li><span class="key key--none"></span>nationality</li>
+          </ul>
+        </div>
+        <div class="ent">
+          <div class="entname">dim_constructor <span class="kind">dim</span></div>
+          <ul>
+            <li><span class="key key--pk">PK</span>constructor_key</li>
+            <li><span class="key key--none"></span>constructor_name</li>
+            <li><span class="key key--none"></span>base_country</li>
+          </ul>
+        </div>
+        <div class="ent">
+          <div class="entname">dim_race <span class="kind">dim</span></div>
+          <ul>
+            <li><span class="key key--pk">PK</span>race_key</li>
+            <li><span class="key key--none"></span>season</li>
+            <li><span class="key key--none"></span>round</li>
+            <li><span class="key">FK</span>circuit_key <span class="ref">&rarr; dim_circuit</span></li>
+          </ul>
+        </div>
+        <div class="ent ent--sub">
+          <div class="entname">dim_circuit <span class="kind">dim</span></div>
+          <ul>
+            <li><span class="key key--pk">PK</span>circuit_key</li>
+            <li><span class="key key--none"></span>circuit_name</li>
+            <li><span class="key key--none"></span>country</li>
+          </ul>
+        </div>
+          </div>
+        </div>
+        <p class="fignote">Both facts point at the same dimensions, so a sprint weekend and a race weekend can be counted together. <code>dim_circuit</code> hangs off <code>dim_race</code> rather than off the facts &mdash; a race happens at one circuit, so the facts reach it through the race they already point at. Both calls are recorded in the repository with the alternatives that lost, so the diagram can be checked against the code rather than taken on trust.</p>
+      </figure>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>03 — <b>the test that earned its keep</b></h3></div>
+    <p class="caseintro">One dbt test derives each championship total from the facts and compares it against the official standings. A row count would have passed. This did not.</p>
+    <div class="testgrid">
+      <div class="code">
+        <div class="codebar">tests/assert_championship_totals_match.sql</div>
+        <pre><code><span class="kw">WITH</span> derived <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> season, driver_key, <span class="kw">SUM</span>(points) <span class="kw">AS</span> derived_points
+  <span class="kw">FROM</span>   fct_all_points          <span class="cm">-- race + sprint</span>
+  <span class="kw">GROUP BY</span> 1, 2
+)
+<span class="kw">SELECT</span> s.season, s.official_points, d.derived_points
+<span class="kw">FROM</span>   stg_official_standings s
+<span class="kw">JOIN</span>   derived d <span class="kw">USING</span> (season, driver_key)
+<span class="kw">WHERE</span>  s.official_points &lt;&gt; d.derived_points;</code></pre>
+      </div>
+      <div>
+        <div class="test">
+          <div class="testbar"><span class="fail">FAIL</span> 1 row returned, expected 0</div>
+          <table class="res">
+            <thead>
+              <tr><th scope="col">season</th><th scope="col">official</th><th scope="col">derived</th><th scope="col">delta</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2024</td><td>437</td><td>399</td><td class="delta">&minus;38</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="testnote">Sprint points were missing entirely. The fix was a second fact table and a union at the points layer &mdash; but the test is the part worth keeping, because it is the reason anyone knew.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>04 — <b>why the full history mattered</b></h3></div>
+    <div class="metrics">
+      <div class="metric"><b>~7.5 h</b><span class="mtext">to backfill every season since 1950, against a 500-request-per-hour budget</span></div>
+      <div class="metric"><b>49% &rarr; 13%</b><span class="mtext">DNF rate, 1950s to 2020s &mdash; the story only exists with the whole history loaded</span></div>
+      <div class="metric"><b>1980s</b><span class="mtext">a bump in the decline, landing exactly where the turbo era belongs</span></div>
+      <div class="metric"><span class="mlabel">decision log</span><span class="mtext">The alternatives that lost are written down in the repository, with why.</span></div>
+    </div>
+  </section>
+  </article>
+
+  <article id="warehouse" class="caseblock">
+    <div class="wrap casehead">
+      <h2>Data warehouse build on Google Cloud</h2>
+      <p class="deck">My team is building our company&rsquo;s first data warehouse. Management had planned to hire a data engineer for it; we took it on ourselves, because we already understood what the business needed from the data.</p>
+      <dl class="meta">
+        <div><dt>built</dt><dd>With my team</dd></div>
+        <div><dt>stack</dt><dd>BigQuery, Dataform, Cloud Run, Zoho Analytics</dd></div>
+        <div><dt>my scope</dt><dd>One data mart, ingestion to dashboards</dd></div>
+        <div><dt>code</dt><dd>Internal &mdash; no public repository</dd></div>
+      </dl>
+    </div>
+
+  <section class="wrap">
+    <div class="shead"><h3>01 — <b>design and governance</b></h3></div>
+    <p class="caseintro">Contributed to the data models, the architecture, and the security and governance decisions before anything was built &mdash; including how access would be limited and how changes would be provisioned.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>02 — <b>first domain delivered</b></h3></div>
+    <p class="caseintro">Built Python ingestion, Dataform transformations and Cloud Run scheduling for the first source system taken on, served through Zoho Analytics.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>03 — <b>a data mart, end to end</b></h3></div>
+    <p class="caseintro">Medallion layering in Dataform &mdash; bronze raw declarations, silver staging, then dimension and fact models, mart and reporting tables &mdash; with scheduling and the reporting layer on top.</p>
+    <p class="fignote">The code is internal, so the design is what I can show. <a href="#f1">The F1 pipeline</a> is the one you can read line by line.</p>
+  </section>
+  </article>
+
+  <div class="wrap backrow">
+    <a class="go" href="index.html#projects">&larr; back to the summary</a>
+  </div>
+
+</main>
+
+<footer class="wrap">
+  <span>Lemuel Calinog · Manila, Philippines</span>
+  <div class="social">
+    <a href="https://github.com/lemybetheone" target="_blank" rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      <span class="sr-only">GitHub (opens in a new tab)</span>
+    </a>
+    <a href="https://www.linkedin.com/in/lemuelcalinog/" target="_blank" rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
+      <span class="sr-only">LinkedIn (opens in a new tab)</span>
+    </a>
+  </div>
+</footer>
+
+<script src="assets/site.js" defer></script>
+</body>
+</html>
