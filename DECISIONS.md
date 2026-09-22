@@ -253,6 +253,87 @@ which is where a reader can verify them rather than take his word for it.
 
 ---
 
+## 17 — A second page for the projects
+
+**Chosen:** a second page, `projects.html`, holding both builds in full. The
+home page keeps a short summary of each.
+
+**Rejected:** keeping everything on one page; a separate case-study page per
+project.
+
+Decision 1 says revisit a generator at roughly four pages sharing a header and
+footer. Two pages do not meet that bar, so the header, footer and pre-paint
+script are duplicated by hand and only the CSS and JS are shared (decision 18).
+The home summary keeps the 437-against-399 result rather than deferring it: the
+strongest sentence on the site should not sit behind a click.
+
+---
+
+## 18 — One stylesheet and one script, shared by both pages
+
+**Chosen:** `assets/style.css` and `assets/site.js`, linked from both pages.
+
+**Rejected:** copying the inline `<style>` and `<script>` blocks into the second
+page.
+
+Two copies of three hundred lines of CSS drift the moment one is edited. An
+external file is not a build step, so decision 1 is untouched, and it costs one
+extra request that is cached from the second page onward. The theme script in
+`<head>` stays inline in both pages, because moving it out reintroduces the
+flash of the wrong theme it exists to prevent.
+
+A relative `url()` inside a stylesheet resolves against the stylesheet, not the
+page. The portrait paths had to drop their `assets/` prefix in the move, and
+they failed silently until the network panel was read.
+
+---
+
+## 19 — The schema diagram is of the F1 model, not of the site
+
+**Chosen:** draw the real star schema, inside the F1 project.
+
+**Rejected:** an entity diagram of the site itself — `engineer`, `project`,
+`experience`, with foreign keys — as a new section on the home page.
+
+The site-as-schema diagram was the more striking of the two, and it was
+invented: no such database exists and nothing was modelled. "Every claim must
+be true" makes that a harder failure than a plain page, and decision 16 had
+already removed a section for being assertion rather than evidence. The F1
+schema makes the same point about how he thinks, and a reader can check it
+against the repository.
+
+---
+
+## 20 — The schema figure is cards in a grid, not a drawn diagram
+
+**Chosen:** entity cards in a CSS grid. The snowflake is shown by nesting
+`dim_circuit` under `dim_race`; the joins by naming the table each foreign key
+points at.
+
+**Rejected:** the positioned diagram with elbow connectors and crow's feet.
+
+The design placed six cards at fixed pixel coordinates inside a 1312px frame.
+The page is fluid to 58rem and has to survive a 375px phone, so those
+coordinates had nowhere to go. Cards reflow, stay selectable and readable, and
+have no geometry to break. The relationships move into the text, which is also
+what a screen reader gets — the diagram is decorative to it either way.
+
+---
+
+## 21 — No visual tiering in the stack list
+
+**Chosen:** every tool in the stack list reads the same.
+
+**Rejected:** accent-coloured markers on the tools used most.
+
+The first version marked Python, SQL, Dataform, dbt and Airflow in the accent
+colour and left the rest muted, meaning "what I write" against "where it runs".
+Nothing on the page said so, and the natural reading of two unexplained tiers in
+a skills list is a self-rating — which is exactly what the private profile is
+kept off the site to avoid.
+
+---
+
 ## October checklist — the custom domain switch
 
 Four things change together. Missing any one leaves a broken or inconsistent
