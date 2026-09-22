@@ -2,7 +2,7 @@
   :root{
     --bg:#0b0c0e; --raised:#121418; --ink:#f2f3f5; --muted:#8a9099;
     --rule:#23262b; --accent:#e8564a; --dot:rgba(255,255,255,.07);
-    --chip:#15181c; --rule-strong:#2e3239;
+    --chip:#15181c; --rule-strong:#2e3239; --scrim-rgb:11,12,14;
     --key:#f09a91; --key-bg:#241512;
     /* one radius scale for the whole page */
     --r-sm:4px; --r-md:6px; --r-lg:9px;
@@ -11,13 +11,13 @@
     :root:not([data-theme="dark"]){
       --bg:#f7f7f5; --raised:#ffffff; --ink:#111316; --muted:#5f666e;
       --rule:#e2e2de; --accent:#c0392f; --dot:rgba(0,0,0,.07); --chip:#eeeeea;
-      --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4;
+      --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4; --scrim-rgb:247,247,245;
     }
   }
   :root[data-theme="light"]{
     --bg:#f7f7f5; --raised:#ffffff; --ink:#111316; --muted:#5f666e;
     --rule:#e2e2de; --accent:#c0392f; --dot:rgba(0,0,0,.07); --chip:#eeeeea;
-    --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4;
+    --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4; --scrim-rgb:247,247,245;
   }
 
   *{box-sizing:border-box}
@@ -136,6 +136,87 @@
   .herolinks a:hover{color:var(--accent)}
   .herolinks a::after{content:" \2197";color:var(--accent)}
 
+  /* the icon only appears in the mobile hero; the label carries wide screens */
+  .herolinks .ico{display:none}
+
+  /* Below 44rem the portrait fills the screen and the copy sits on it, centred.
+     The photograph's backdrop peaks at 0.99 relative luminance, so light text
+     over it unwashed measures about 1.05:1. A wash of 0.85 is what AA needs at
+     that peak, and it fades in only under the copy, so the figure above stays
+     as it was shot. */
+  @media (max-width:43.98rem){
+    .hero{
+      position:relative;
+      /* 7rem is the header above it, so the photograph fills what is left */
+      min-height:calc(100vh - 7rem);min-height:calc(100svh - 7rem);
+      display:flex;align-items:flex-end;text-align:center;
+      padding-top:1.5rem;padding-bottom:2rem;
+      background-image:url(portrait-full.jpg);
+      background-size:cover;background-position:50% 50%;background-repeat:no-repeat;
+    }
+    .hero::before{
+      content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+      background:linear-gradient(to bottom,
+        rgba(var(--scrim-rgb),.10) 0%,
+        rgba(var(--scrim-rgb),0) 30%);
+    }
+    .hero > .wrap{position:relative;width:100%;z-index:2}
+    /* sized to the copy, not to a share of the viewport: a percentage cannot
+       know how tall the text is */
+    .hero > .wrap::before{
+      content:"";position:absolute;z-index:-1;pointer-events:none;
+      left:0;right:0;top:-6rem;bottom:-2rem;
+      background:linear-gradient(to bottom,
+        rgba(var(--scrim-rgb),0) 0,
+        rgba(var(--scrim-rgb),.86) 6rem,
+        rgba(var(--scrim-rgb),.93) 100%);
+    }
+    .portrait{display:none}
+    .herogrid{gap:0}
+    .herogrid > div:last-child{display:flex;flex-direction:column;align-items:center}
+
+    /* .hero p is (0,1,1) and outranks a bare .avail, so this has to match it */
+    .hero .avail{
+      order:1;margin:0 0 1.1rem;
+      background:rgba(var(--scrim-rgb),.45);border-color:rgba(255,255,255,.22);
+      -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+      color:var(--ink);
+    }
+    .hero .lede{
+      order:2;margin:0 0 1.4rem;max-width:30rem;
+      font-size:.9375rem;line-height:1.6;color:var(--ink);
+    }
+    .hero .lede strong{font-weight:600}
+    /* the second paragraph is desktop only */
+    .hero .sub{display:none}
+
+    .herolinks{order:3;margin:0 0 1.5rem;gap:.75rem;justify-content:center}
+    .herolinks .lbl{display:none}
+    .herolinks .ico{display:inline-flex;line-height:0}
+    .herolinks a::after{content:none}
+    .herolinks a{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:2.75rem;height:2.75rem;border-radius:50%;color:var(--ink);
+      background:rgba(var(--scrim-rgb),.45);border:1px solid rgba(255,255,255,.22);
+      -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+    }
+
+    /* family, weight and tracking stay as the desktop h1 sets them; only the
+       position and the size change for the splash */
+    .hero h1{
+      order:4;margin:0;
+      font-size:clamp(2rem,11vw,3.25rem);line-height:1.05;
+    }
+  }
+  /* a light theme wash is pale, so its glass needs a dark edge instead */
+  @media (max-width:43.98rem){
+    :root[data-theme="light"] .hero .avail,
+    :root[data-theme="light"] .herolinks a{border-color:rgba(0,0,0,.18)}
+  }
+  @media (max-width:43.98rem) and (prefers-color-scheme:light){
+    :root:not([data-theme="dark"]) .hero .avail,
+    :root:not([data-theme="dark"]) .herolinks a{border-color:rgba(0,0,0,.18)}
+  }
   /* ---------- stat strip ---------- */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
   .stat{padding:1.5rem 1rem;border-right:1px solid var(--rule)}
