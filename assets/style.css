@@ -81,8 +81,10 @@
   }
   @media (max-width:34rem){
     nav{order:3;width:100%;border-top:1px solid var(--rule);padding-top:.6rem}
-    /* tightened so all five links sit on one line at 375px */
-    nav ul{gap:.8rem}
+    /* space-between spreads the five links across the full row; the gap is only
+       the minimum, kept small enough that they still fit on one line at 320px,
+       where 0.8rem was pushing contact onto a second row */
+    nav ul{gap:.4rem;justify-content:space-between}
     nav a{font-size:.6875rem;letter-spacing:.06em}
   }
 
@@ -443,11 +445,12 @@
     padding:.7rem 1.1rem;border:1px solid var(--rule);border-radius:var(--r-sm);
     background:transparent;color:var(--ink);text-decoration:none;
     font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8125rem;
-    transition:border-color .16s ease, color .16s ease;
+    transition:border-color .18s ease, color .18s ease, transform .18s ease;
   }
-  /* hover:hover keeps this off touch screens, where :hover sticks after a tap */
-  @media (hover:hover){ .btn:hover{border-color:var(--ink)} }
-  @media (prefers-reduced-motion:reduce){ .btn{transition:none} }
+  /* hover:hover keeps this off touch screens, where :hover sticks after a tap.
+     transform does not reflow, so the neighbouring button never shifts */
+  @media (hover:hover){ .btn:hover{border-color:var(--ink);transform:scale(1.025)} }
+  @media (prefers-reduced-motion:reduce){ .btn{transition:none} .btn:hover{transform:none} }
   .btn-icon{display:inline-flex;line-height:0;color:var(--muted)}
   .btn:hover .btn-icon{color:var(--ink)}
   /* the label is fixed-width so swapping it to 'copied' does not shift the row */
