@@ -357,8 +357,11 @@
   .caseintro{margin:1.25rem 0 0;max-width:44rem;color:var(--muted);font-size:.9375rem}
 
   .flow{display:grid;gap:.6rem;margin:1.5rem 0 0}
+  /* flex, not grid: grid-auto-columns gave the arrows a full 1fr track each,
+     squeezing the five nodes into a ninth of the row apiece. */
   @media (min-width:52rem){
-    .flow{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);align-items:stretch;gap:0}
+    .flow{display:flex;align-items:stretch;gap:0}
+    .node{flex:1 1 0;min-width:0}
   }
   .node{border:1px solid var(--rule);background:var(--raised);border-radius:var(--r-md);padding:.75rem .8rem}
   .node--model{border-color:var(--accent)}
@@ -370,8 +373,23 @@
   .node .nname{margin:0 0 .3rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8125rem;font-weight:650}
   .node .nsub{margin:0;font-size:.75rem;color:var(--muted);line-height:1.45}
   .arrow{display:none}
+  /* the connector spans the whole gap, so it reads as a join rather than a stub */
   @media (min-width:52rem){
-    .arrow{display:flex;align-items:center;justify-content:center;width:1.75rem;color:var(--rule-strong)}
+    /* The line and head are inset inside the track so neither touches a card.
+       The head is a square rotated 45deg, and rotation throws its corners about
+       1.7px outside its own box, so it needs clearance of its own. */
+    .arrow{
+      display:block;flex:0 0 3rem;align-self:center;position:relative;height:9px;
+    }
+    .arrow::before{
+      content:"";position:absolute;left:5px;right:5px;top:4px;
+      height:1px;background:var(--rule-strong);
+    }
+    .arrow::after{
+      content:"";position:absolute;right:5px;top:0;width:8px;height:8px;
+      border-top:1px solid var(--rule-strong);border-right:1px solid var(--rule-strong);
+      transform:rotate(45deg);
+    }
   }
   .orch{
     display:flex;align-items:baseline;gap:.75rem;flex-wrap:wrap;
