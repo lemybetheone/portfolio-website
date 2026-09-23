@@ -104,7 +104,7 @@
         <p class="nsub">Dashboards, ad hoc SQL</p>
       </div>
     </div>
-    <p class="orch"><b>orchestration</b> Airflow &mdash; nightly, one DAG per stage, retries on the rate limit</p>
+    <p class="orch"><b>orchestration</b> Airflow: nightly, one DAG per stage, retries on the rate limit</p>
   </section>
 
   <section class="wrap">
@@ -169,7 +169,7 @@
         </div>
           </div>
         </div>
-        <p class="fignote">Both facts point at the same dimensions, so a sprint weekend and a race weekend can be counted together. <code>dim_circuit</code> hangs off <code>dim_race</code> rather than off the facts &mdash; a race happens at one circuit, so the facts reach it through the race they already point at. Both calls are recorded in the repository with the alternatives that lost, so the diagram can be checked against the code rather than taken on trust.</p>
+        <p class="fignote">Both facts point at the same dimensions, so a sprint weekend and a race weekend can be counted together. <code>dim_circuit</code> hangs off <code>dim_race</code> rather than off the facts: a race happens at one circuit, so the facts reach it through the race they already point at. Both calls are recorded in the repository with the alternatives that lost, so the diagram can be checked against the code rather than taken on trust.</p>
       </figure>
   </section>
 
@@ -201,7 +201,7 @@
             </tbody>
           </table>
         </div>
-        <p class="testnote">Sprint points were missing entirely. The fix was a second fact table and a union at the points layer &mdash; but the test is the part worth keeping, because it is the reason anyone knew.</p>
+        <p class="testnote">Sprint points were missing entirely. The fix was a second fact table and a union at the points layer. Without the test, nobody would have known to write it.</p>
       </div>
     </div>
   </section>
@@ -210,7 +210,7 @@
     <div class="shead"><h3>04 — <b>why the full history mattered</b></h3></div>
     <div class="metrics">
       <div class="metric"><b>~7.5 h</b><span class="mtext">to backfill every season since 1950, against a 500-request-per-hour budget</span></div>
-      <div class="metric"><b>49% &rarr; 13%</b><span class="mtext">DNF rate, 1950s to 2020s &mdash; the story only exists with the whole history loaded</span></div>
+      <div class="metric"><b>49% &rarr; 13%</b><span class="mtext">DNF rate, 1950s to 2020s. The trend only appears with the whole history loaded</span></div>
       <div class="metric"><b>1980s</b><span class="mtext">a bump in the decline, landing exactly where the turbo era belongs</span></div>
       <div class="metric"><span class="mlabel">decision log</span><span class="mtext">The alternatives that lost are written down in the repository, with why.</span></div>
     </div>
@@ -225,23 +225,23 @@
         <div><dt>built</dt><dd>With my team</dd></div>
         <div><dt>stack</dt><dd>BigQuery, Dataform, Cloud Run, Zoho Analytics</dd></div>
         <div><dt>my scope</dt><dd>One data mart, ingestion to dashboards</dd></div>
-        <div><dt>code</dt><dd>Internal &mdash; no public repository</dd></div>
+        <div><dt>code</dt><dd>Internal, no public repository</dd></div>
       </dl>
     </div>
 
   <section class="wrap">
     <div class="shead"><h3>01 — <b>design and governance</b></h3></div>
-    <p class="caseintro">Contributed to the data models, the architecture, and the security and governance decisions before anything was built &mdash; including how access would be limited and how changes would be provisioned.</p>
+    <p class="caseintro">I contributed to the data models, the architecture, and the security and governance decisions before anything was built, including how access would be limited and how changes would be provisioned.</p>
   </section>
 
   <section class="wrap">
     <div class="shead"><h3>02 — <b>first domain delivered</b></h3></div>
-    <p class="caseintro">Built Python ingestion, Dataform transformations and Cloud Run scheduling for the first source system taken on, served through Zoho Analytics.</p>
+    <p class="caseintro">I built Python ingestion, Dataform transformations and Cloud Run scheduling for the first source system we took on, served through Zoho Analytics.</p>
   </section>
 
   <section class="wrap">
     <div class="shead"><h3>03 — <b>a data mart, end to end</b></h3></div>
-    <p class="caseintro">Medallion layering in Dataform &mdash; bronze raw declarations, silver staging, then dimension and fact models, mart and reporting tables &mdash; with scheduling and the reporting layer on top.</p>
+    <p class="caseintro">Medallion layering in Dataform, from bronze raw declarations and silver staging through to dimension and fact models, mart and reporting tables. Scheduling and the reporting layer sit on top.</p>
     <p class="fignote">The code is internal, so the design is what I can show. <a href="#f1">The F1 pipeline</a> is the one you can read line by line.</p>
   </section>
   </article>
