@@ -87,6 +87,12 @@
     nav ul{gap:.4rem;justify-content:space-between}
     nav a{font-size:.6875rem;letter-spacing:.06em}
   }
+  /* six links do not fit one line on the narrowest phones: the labels alone are
+     269px inside 280px, leaving 11px for five gaps. One step down of type and
+     tracking buys the room back, below the width where 375px devices sit. */
+  @media (max-width:21.5rem){
+    nav a{font-size:.625rem;letter-spacing:.03em}
+  }
 
   /* ---------- hero ---------- */
   /* #top is the hero itself and the header is sticky, so jumping to it parked
