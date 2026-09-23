@@ -465,7 +465,15 @@
     display:inline-block;margin:1.5rem 0 0;padding:.65rem 1.1rem;
     background:var(--accent);color:var(--bg);text-decoration:none;font-weight:650;
     border-radius:var(--r-sm);font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8125rem;
+    /* stands alone on the left, so it grows rightward rather than outward */
+    transform-origin:left center;
+    transition:transform .18s ease;
   }
+  /* hover:hover keeps this off touch screens, where :hover sticks after a tap.
+     1.025 matches .btn: both are buttons of much the same height, unlike the
+     12px .go links, which needed more to read as movement at all. */
+  @media (hover:hover){ .cta:hover{transform:scale(1.025)} }
+  @media (prefers-reduced-motion:reduce){ .cta{transition:none} .cta:hover{transform:none} }
   .meta{display:grid;gap:1rem;margin:2.25rem 0 0;padding:1.25rem 0;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule)}
   @media (min-width:46rem){ .meta{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem} }
   .meta dt{
