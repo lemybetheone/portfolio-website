@@ -334,12 +334,51 @@ kept off the site to avoid.
 
 ---
 
+## 22 — The Open Graph card has a generator
+
+**Chosen:** `tools/make-og.ps1` rebuilds `assets/og.png`, and is committed
+beside it.
+
+**Rejected:** recording the recipe here in prose, and leaving the image as a
+file nobody can rebuild.
+
+The card's first version had no source. Retitling the site to Data
+Engineering meant regenerating it, because its text is part of the image
+rather than markup, and nothing recorded how it had been made. The design had
+to be read back out of the pixels: the colours sampled, the rules and margins
+located, and the type sizes derived from the measured width of each line.
+
+All of that was recovering something that had simply never been written down.
+A prose recipe would have helped, but it cannot be checked. The script can: it
+reproduces the committed PNG byte for byte, so the image in the repository and
+the script that makes it cannot drift apart without a `cmp` catching it.
+
+**The cost:** a `tools/` directory and a Windows-only script in a repository
+that is otherwise plain HTML and CSS. It is a tool rather than a build step,
+so the site still compiles to nothing and deploys by pushing, and the script
+runs by hand on the rare occasion the card's wording changes.
+
+Font sizes are fitted to measured target widths rather than set directly. A
+missing font is then substituted and scaled to fill the same space, so the
+layout degrades instead of breaking on a machine without Georgia.
+
+---
+
 ## October checklist — the custom domain switch
 
-Four things change together. Missing any one leaves a broken or inconsistent
+Five things change together. Missing any one leaves a broken or inconsistent
 link somewhere:
 
 1. `index.html` — `og:url` and `og:image` (decision 14)
-2. The CV — add the site URL if it is going on there
-3. LinkedIn — Featured section and Contact info website entry
-4. Vercel — keep the `.vercel.app` address redirecting, do not remove it
+2. `projects.html` — `og:url` and `og:image` (decision 14)
+3. The CV — add the site URL if it is going on there
+4. LinkedIn — Featured section and Contact info website entry
+5. Vercel — keep the `.vercel.app` address redirecting, do not remove it
+
+That is four absolute URLs across two files, not two across one, which is what
+this list said until the second page was added. Rather than trust the count,
+find them:
+
+```
+grep -rn 'lemybetheone\.vercel\.app' index.html projects.html
+```
