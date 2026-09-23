@@ -143,7 +143,9 @@
   .herolinks a:hover{color:var(--accent)}
   .herolinks a::after{content:" \2197";color:var(--accent)}
 
-  /* the icon only appears in the mobile hero; the label carries wide screens */
+  /* The icon belongs to the hero links alone: the label carries wide screens,
+     and every other .herolinks on the site - all repos on projects.html - stays
+     a plain text link rather than being forced into an icon circle. */
   .herolinks .ico{display:none}
 
   /* Below 44rem the portrait fills the screen and the copy sits on it, centred.
@@ -197,11 +199,11 @@
     /* the second paragraph is desktop only */
     .hero .sub{display:none}
 
-    .herolinks{order:3;margin:0 0 1.5rem;gap:.75rem;justify-content:center}
-    .herolinks .lbl{display:none}
-    .herolinks .ico{display:inline-flex;line-height:0}
-    .herolinks a::after{content:none}
-    .herolinks a{
+    .hero .herolinks{order:3;margin:0 0 1.5rem;gap:.75rem;justify-content:center}
+    .hero .herolinks .lbl{display:none}
+    .hero .herolinks .ico{display:inline-flex;line-height:0}
+    .hero .herolinks a::after{content:none}
+    .hero .herolinks a{
       display:inline-flex;align-items:center;justify-content:center;
       width:2.75rem;height:2.75rem;border-radius:50%;color:var(--ink);
       background:rgba(var(--scrim-rgb),.45);border:1px solid rgba(255,255,255,.22);
@@ -221,12 +223,12 @@
     :root[data-theme="light"] .hero{background-image:url(portrait-full-light.jpg)}
     :root[data-theme="dark"] .hero{background-image:url(portrait-full.jpg)}
     :root[data-theme="light"] .hero .avail,
-    :root[data-theme="light"] .herolinks a{border-color:rgba(0,0,0,.18)}
+    :root[data-theme="light"] .hero .herolinks a{border-color:rgba(0,0,0,.18)}
   }
   @media (max-width:43.98rem) and (prefers-color-scheme:light){
     :root:not([data-theme="dark"]) .hero{background-image:url(portrait-full-light.jpg)}
     :root:not([data-theme="dark"]) .hero .avail,
-    :root:not([data-theme="dark"]) .herolinks a{border-color:rgba(0,0,0,.18)}
+    :root:not([data-theme="dark"]) .hero .herolinks a{border-color:rgba(0,0,0,.18)}
   }
   /* ---------- stat strip ---------- */
   .stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
