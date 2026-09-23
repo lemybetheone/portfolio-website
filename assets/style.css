@@ -87,6 +87,12 @@
     nav ul{gap:.4rem;justify-content:space-between}
     nav a{font-size:.6875rem;letter-spacing:.06em}
   }
+  /* six links do not fit one line on the narrowest phones: the labels alone are
+     269px inside 280px, leaving 11px for five gaps. One step down of type and
+     tracking buys the room back, below the width where 375px devices sit. */
+  @media (max-width:21.5rem){
+    nav a{font-size:.625rem;letter-spacing:.03em}
+  }
 
   /* ---------- hero ---------- */
   /* #top is the hero itself and the header is sticky, so jumping to it parked
@@ -94,6 +100,11 @@
      The offset matches the header, which lands the page at its true top where
      the whole figure shows. Desktop has a shorter header, so it simply clamps. */
   #top{scroll-margin-top:7rem}
+  /* Same reason for the section anchors: the header is sticky, so landing a
+     section at the viewport top hid its heading behind it. 3.5rem clears the
+     desktop header, 7rem the taller mobile one. */
+  section[id]{scroll-margin-top:3.5rem}
+  @media (max-width:43.98rem){ section[id]{scroll-margin-top:7rem} }
   .hero{
     position:relative;padding-top:4rem;padding-bottom:3.5rem;
     background-image:radial-gradient(var(--dot) 1px, transparent 1px);
