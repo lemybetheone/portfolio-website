@@ -76,3 +76,26 @@
     }catch(e){ done(false,email); }
   }
 })();
+
+/* The sticky header's height is what every anchor has to clear, and it is not
+   a constant: the nav wraps to its own line once the labels no longer fit, so
+   the header is 56px, 96px or 109px depending on the width and on the labels.
+   Publishing the measured height as a custom property keeps the CSS honest
+   without a breakpoint that has to be corrected by hand. */
+(function(){
+  var header=document.querySelector('header');
+  if(!header) return;
+  function publish(){
+    document.documentElement.style.setProperty('--header-h',header.offsetHeight+'px');
+  }
+  publish();
+  /* Both, not one or the other. The published value is an inline custom
+     property, so it outranks the stylesheet's fallback: correct while fresh,
+     wrong the moment it is stale. resize covers rotation and window changes;
+     ResizeObserver additionally catches the header changing height on its own,
+     such as a font loading late and rewrapping the nav. */
+  window.addEventListener('resize',publish);
+  if(window.ResizeObserver){ new ResizeObserver(publish).observe(header); }
+  /* a late webfont can rewrap the nav after this runs */
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(publish); }
+})();

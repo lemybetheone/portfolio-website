@@ -101,10 +101,26 @@
      the whole figure shows. Desktop has a shorter header, so it simply clamps. */
   #top{scroll-margin-top:7rem}
   /* Same reason for the section anchors: the header is sticky, so landing a
-     section at the viewport top hid its heading behind it. 3.5rem clears the
-     desktop header, 7rem the taller mobile one. */
-  section[id]{scroll-margin-top:3.5rem}
-  @media (max-width:43.98rem){ section[id]{scroll-margin-top:7rem} }
+     section at the viewport top hid its heading behind it.
+
+     The offset cannot be a fixed number. .bar wraps, so the nav drops onto a
+     second line as soon as the labels stop fitting beside the brand, and the
+     header goes from 56px to 96px to 109px. That point depends on the labels
+     themselves, not on a breakpoint: adding stack moved it. site.js measures
+     the header and publishes it here; the value below is the fallback for
+     when that script has not run.
+
+     A section also carries 3.25rem of its own top padding. Subtracting less
+     than that tucks the remainder behind the header rather than leaving it
+     below as dead space, so the clearance between header and heading is 24px
+     on phones. Wide screens keep the full header height, where the padding
+     is the gap and a taller viewport carries it comfortably. */
+  :root{--header-h:56px}
+  /* the nav is on its own line below 34rem, which is the one wrap point a
+     media query can state; the script corrects the band in between */
+  @media (max-width:34rem){ :root{--header-h:109px} }
+  section[id]{scroll-margin-top:calc(var(--header-h) - 1.75rem)}
+  @media (min-width:44rem){ section[id]{scroll-margin-top:var(--header-h)} }
   .hero{
     position:relative;padding-top:4rem;padding-bottom:3.5rem;
     background-image:radial-gradient(var(--dot) 1px, transparent 1px);
@@ -466,7 +482,12 @@
   .casehead{padding-top:3rem;padding-bottom:1rem}
   .caseblock + .caseblock{border-top:1px solid var(--rule-strong)}
   /* the header is sticky, so a project linked to by #id must clear it */
-  .caseblock[id]{scroll-margin-top:4.5rem}
+  /* The case studies are linked from the home page, so they land the same way.
+     .caseblock has no padding of its own, but .casehead inside it has 3rem,
+     which is where the clearance comes from: 20px on a phone. Wide screens
+     keep the 4.5rem they already had, which reads correctly there. */
+  .caseblock[id]{scroll-margin-top:calc(var(--header-h) - 1.75rem)}
+  @media (min-width:44rem){ .caseblock[id]{scroll-margin-top:4.5rem} }
   .caseblock h2{
     margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
     font-size:clamp(1.5rem,5vw,2.25rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;
