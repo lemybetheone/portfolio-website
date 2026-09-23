@@ -242,6 +242,11 @@
   <section class="wrap">
     <div class="shead"><h3>03 — <b>a data mart, end to end</b></h3></div>
     <p class="caseintro">Medallion layering in Dataform, from bronze raw declarations and silver staging through to dimension and fact models, mart and reporting tables. Scheduling and the reporting layer sit on top.</p>
+  </section>
+
+  <section class="wrap">
+    <div class="shead"><h3>04 — <b>a loader that matched by position</b></h3></div>
+    <p class="caseintro">Raw responses landed in Bronze as CSV. BigQuery&rsquo;s CSV loader matches columns by position rather than by name, so a column reordered upstream breaks the load. Moving Bronze to JSON Lines fixed it: JSON Lines matches by name, so a field that moves, or a new one that appears, lands where it belongs.</p>
     <p class="fignote">The code is internal, so the design is what I can show. <a href="#f1">The F1 pipeline</a> is the one you can read line by line.</p>
   </section>
   </article>
