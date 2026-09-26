@@ -426,6 +426,31 @@ look at the crop.
 are dense detail and JPEG pays for it. Quality 55 only reached 230 KB, so it
 stays at the script's default of 72, the same recipe as F1.
 
+## 25 — The theme switch is a view transition, with the crossfade as fallback
+
+**Chosen:** `document.startViewTransition` with a circle that grows from the
+toggle over .45s. Browsers without it, and anyone with reduced motion
+switched on, keep the existing crossfade.
+
+**Rejected:** the technique in the CodePen that inspired it, which copies the
+whole page into an overlay, toggles the copy and swaps it in afterwards.
+
+Copying the page drops every event listener on the copied elements, so the
+copy-email button would have stopped working after the first toggle. It also
+duplicates every `id` for the length of the animation, which breaks `#f1`
+links and confuses assistive technology, and it needs jQuery and a
+scrolling container. A view transition gets the same effect from the
+browser: it snapshots the page before and after the change and animates
+between the snapshots, so the DOM is never copied.
+
+The snapshots are images, so the portraits and photo banners are uncovered
+with everything else. The crossfade could only transition colours, so it
+swapped images instantly.
+
+**The cost:** it is decoration on a toggle, added days before the site
+freezes for October. It is contained to one function in `site.js` and one
+block in `style.css`, so reverting it is one commit.
+
 ---
 
 ## October checklist — the custom domain switch

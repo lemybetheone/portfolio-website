@@ -18,22 +18,42 @@
     icon.textContent = c==='dark' ? '☀' : '☾';
     btn.setAttribute('aria-label', c==='dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
   btn.addEventListener('click',function(){
     var next = current()==='dark' ? 'light' : 'dark';
+    function apply(){
+      // restart the icon animation even on rapid clicks
+      icon.classList.remove('swap');
+      void icon.offsetWidth;
+      icon.classList.add('swap');
 
-    // fade the colours only for the duration of the change
+      root.setAttribute('data-theme', next);
+      try{ localStorage.setItem('theme', next); }catch(e){}
+      sync();
+    }
+
+    // Where the browser supports it, the new theme is revealed by a circle
+    // growing from the button. The browser snapshots the page before and
+    // after apply() and CSS animates between the two, so nothing in the DOM
+    // is copied and images change with everything else.
+    if(document.startViewTransition && !(still && still.matches)){
+      var r=btn.getBoundingClientRect();
+      var x=r.left+r.width/2, y=r.top+r.height/2;
+      // radius to the farthest corner of the viewport, so the circle just
+      // covers it
+      var rad=Math.hypot(Math.max(x, innerWidth-x), Math.max(y, innerHeight-y));
+      root.style.setProperty('--vt-x', x+'px');
+      root.style.setProperty('--vt-y', y+'px');
+      root.style.setProperty('--vt-r', rad+'px');
+      document.startViewTransition(apply);
+      return;
+    }
+
+    // otherwise fade the colours only for the duration of the change
     root.classList.add('theme-anim');
     clearTimeout(timer);
     timer=setTimeout(function(){ root.classList.remove('theme-anim'); }, 340);
-
-    // restart the icon animation even on rapid clicks
-    icon.classList.remove('swap');
-    void icon.offsetWidth;
-    icon.classList.add('swap');
-
-    root.setAttribute('data-theme', next);
-    try{ localStorage.setItem('theme', next); }catch(e){}
-    sync();
+    apply();
   });
   icon.addEventListener('animationend',function(){ icon.classList.remove('swap'); });
   sync();

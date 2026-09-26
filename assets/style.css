@@ -63,6 +63,20 @@
     .theme-anim, .theme-anim *{transition:none !important}
     #theme-icon.swap{animation:none}
   }
+  /* Theme reveal, for browsers with view transitions (site.js falls back to
+     the crossfade above otherwise). The old page stays still underneath and
+     the new one is uncovered by a circle from the toggle; site.js sets its
+     centre and the radius that just reaches the farthest corner. The
+     browser's default crossfade is switched off, or both pages would fade
+     while the circle grew. .45s rather than the usual 1s+: it is a flourish
+     on a toggle, not an event. */
+  ::view-transition-old(root),
+  ::view-transition-new(root){animation:none;mix-blend-mode:normal}
+  ::view-transition-new(root){animation:theme-reveal .45s ease-in-out}
+  @keyframes theme-reveal{
+    from{clip-path:circle(0 at var(--vt-x) var(--vt-y))}
+    to{clip-path:circle(var(--vt-r) at var(--vt-x) var(--vt-y))}
+  }
 
   .skip{position:absolute;left:-9999px}
   .skip:focus{left:1rem;top:1rem;z-index:20;background:var(--raised);padding:.6rem 1rem;border:1px solid var(--rule)}
