@@ -43,6 +43,7 @@ assets/*.jpg
 !assets/portrait-full.jpg
 !assets/portrait-full-light.jpg
 !assets/f1-banner.jpg
+!assets/warehouse-banner.jpg
 
 # Source photography in other formats too.
 assets/*.jpeg
