@@ -362,6 +362,36 @@ Font sizes are fitted to measured target widths rather than set directly. A
 missing font is then substituted and scaled to fill the same space, so the
 layout degrades instead of breaking on a machine without Georgia.
 
+## 23 — The F1 header sits on a photo, and its text goes to full ink
+
+**Chosen:** `assets/f1-banner.jpg` behind the F1 case-study header, under a
+scrim of the page colour at 0.62. The deck and the `.meta` labels switch from
+`--muted` to `--ink` there. `background-position` is `66% 50%` at every width.
+
+**Rejected:** keeping `--muted` and strengthening the scrim until it passed,
+and a separate mobile `background-position` behind a media query.
+
+Contrast was measured, not judged by eye. Across 7,811 pixels sampled where
+the text sits, the brightest is the white kerb (luminance 0.73). Against it at
+0.62, `--muted` reaches only 2.09:1 dark and 2.06:1 light, far under the 4.5:1
+AA floor. Saving `--muted` would need 0.82 dark and 0.90 light, which leaves
+the photo a ghost. `--ink` gives 6.05:1 and 6.59:1. On a phone the text covers
+different pixels, so the check was repeated against the brightest pixel in the
+whole image, a highlight on the car (luminance 0.85). It still passes: 5.52:1
+dark, 6.54:1 light. The bound holds wherever the crop lands.
+
+The car's centre is 62% across the banner. A phone header is about 1:2, so
+`cover` shows only the middle quarter of the image's width, and `50%` cut the
+car in half. At desktop width the header matches the banner's own 2.13:1, and
+the x value has no effect. So one value serves every width, and the media
+query would have been code that does nothing.
+
+**The cost:** the car sits partly behind the button on a phone. The whole car
+is 39% of the banner's width against the quarter a phone shows, so no position
+fits it all. `tools/make-banner.ps1` reproduces the committed JPEG byte for
+byte, but its source photo is gitignored like the other source photography.
+Only a machine that has `assets/source-f1.jpg` can rebuild it.
+
 ---
 
 ## October checklist — the custom domain switch
