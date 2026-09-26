@@ -4,6 +4,10 @@
     --rule:#23262b; --accent:#e8564a; --dot:rgba(255,255,255,.07);
     --chip:#15181c; --rule-strong:#2e3239; --scrim-rgb:11,12,14;
     --key:#f09a91; --key-bg:#241512;
+    /* the stack entries are the only raised surfaces on the site, so the
+       shadow lives here rather than in a general scale */
+    --emboss:inset 0 1px 0 rgba(255,255,255,.055), 0 1px 2px rgba(0,0,0,.45), 0 4px 10px rgba(0,0,0,.3);
+    --emboss-hover:inset 0 1px 0 rgba(255,255,255,.085), 0 2px 4px rgba(0,0,0,.5), 0 10px 22px rgba(0,0,0,.42);
     /* one radius scale for the whole page */
     --r-sm:4px; --r-md:6px; --r-lg:9px;
   }
@@ -12,12 +16,16 @@
       --bg:#f7f7f5; --raised:#ffffff; --ink:#111316; --muted:#5f666e;
       --rule:#e2e2de; --accent:#c0392f; --dot:rgba(0,0,0,.07); --chip:#eeeeea;
       --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4; --scrim-rgb:247,247,245;
+      --emboss:inset 0 1px 0 rgba(255,255,255,.85), 0 1px 2px rgba(0,0,0,.07), 0 3px 8px rgba(0,0,0,.05);
+      --emboss-hover:inset 0 1px 0 #fff, 0 2px 5px rgba(0,0,0,.1), 0 10px 20px rgba(0,0,0,.09);
     }
   }
   :root[data-theme="light"]{
     --bg:#f7f7f5; --raised:#ffffff; --ink:#111316; --muted:#5f666e;
     --rule:#e2e2de; --accent:#c0392f; --dot:rgba(0,0,0,.07); --chip:#eeeeea;
     --rule-strong:#cbcbc5; --key:#a33227; --key-bg:#f7e7e4; --scrim-rgb:247,247,245;
+    --emboss:inset 0 1px 0 rgba(255,255,255,.85), 0 1px 2px rgba(0,0,0,.07), 0 3px 8px rgba(0,0,0,.05);
+    --emboss-hover:inset 0 1px 0 #fff, 0 2px 5px rgba(0,0,0,.1), 0 10px 20px rgba(0,0,0,.09);
   }
 
   *{box-sizing:border-box}
@@ -439,15 +447,35 @@
      column-width behaves like the old minmax: as many columns as fit. */
   .stackgrid{columns:9.5rem;column-gap:.7rem}
   .stackgrid .ent{break-inside:avoid;-webkit-column-break-inside:avoid;margin-bottom:.7rem}
+  /* The entries lift off the page: a hairline highlight along the top edge for
+     the emboss, a shadow beneath for the lift, and a small grow on hover. The
+     shadows are theme tokens because a value that reads on near-black is
+     invisible on near-white, and the reverse.
+
+     Scoped to .stackgrid like everything else here. .ent is also the schema
+     figure on projects.html, which is a diagram and stays flat. */
+  .stackgrid .ent{
+    position:relative;
+    box-shadow:var(--emboss);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
   .stackgrid .ent li{transition:background-color .16s ease}
   .stackgrid .dot{transition:background-color .16s ease}
   /* hover:hover keeps this off touch screens, where :hover sticks after a tap */
   @media (hover:hover){
+    .stackgrid .ent:hover{
+      /* 1.02, not the 1.025 the buttons use: a 169px card grows four times as
+         many pixels as a 45px button at the same ratio */
+      transform:scale(1.02);
+      box-shadow:var(--emboss-hover);
+      z-index:1;   /* stay above the neighbouring columns while grown */
+    }
     .stackgrid .ent li:hover{background:var(--chip)}
     .stackgrid .ent li:hover .dot{background:var(--ink)}
   }
   @media (prefers-reduced-motion:reduce){
-    .stackgrid .ent li,.stackgrid .dot{transition:none}
+    .stackgrid .ent,.stackgrid .ent li,.stackgrid .dot{transition:none}
+    .stackgrid .ent:hover{transform:none}
   }
 
   .test{border:1px solid var(--accent);background:var(--bg);border-radius:var(--r-md);overflow:hidden}
