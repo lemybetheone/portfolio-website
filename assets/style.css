@@ -539,8 +539,49 @@
     margin:0 0 1.25rem;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.75rem;color:var(--muted);letter-spacing:.06em;
   }
   .crumb a{color:var(--muted)}
+  /* .pagehead carried no bottom spacing of its own. That was invisible while
+     the case studies were plain sections, because .casehead's own 3rem read as
+     the gap. Now that each study is a card, the all-repos link sat flush
+     against its top border.
+
+     2.5rem: more than the 1.75rem between the cards, so the heading block
+     separates more strongly than the cards do from each other, and less than
+     the card's own 3rem of internal padding. */
+  .pagehead{padding-bottom:2.5rem}
   .casehead{padding-top:3rem;padding-bottom:1rem}
-  .caseblock + .caseblock{border-top:1px solid var(--rule-strong)}
+  /* Each case study is a card, so the page reads as two projects rather than
+     one long scroll. Separation is the gap between them, so the rule that used
+     to divide them goes.
+
+     The article takes over the wrapping. Its inner .wrap elements stop
+     constraining width and their 1.25rem padding becomes the card's internal
+     padding instead. calc(100% - 2.5rem) keeps the site's gutter on either
+     side at narrow widths, where the card would otherwise sit flush against
+     the screen edge. */
+  .caseblock{
+    width:calc(100% - 2.5rem);max-width:58rem;margin:0 auto 1.75rem;
+    border:1px solid var(--rule);border-radius:var(--r-md);
+    background:var(--bg);box-shadow:var(--emboss);
+  }
+  .caseblock:last-of-type{margin-bottom:0}
+  .caseblock .wrap{max-width:none;margin-left:0;margin-right:0}
+  /* the closing section's rule would otherwise double up with the card's own
+     bottom edge, one hairline above the other */
+  .caseblock section:last-of-type{border-bottom:0}
+
+  /* The gutter outside the card and the padding inside it both come out of the
+     same narrow screen: at 320px they took 84px of it, dropping the text column
+     from 280px to 238px. Tightening both recovers most of that, and only where
+     the width is actually scarce. */
+  @media (max-width:30rem){
+    .caseblock{width:calc(100% - 1.5rem)}
+    .caseblock .wrap{padding-left:.9rem;padding-right:.9rem}
+  }
+
+  /* No hover grow here, unlike the summary cards on the home page. The F1
+     case study is about 2,600px tall: you cannot see both its edges at once,
+     so a 4px shift reads as the page twitching rather than as a card lifting,
+     and there is nothing to click on the block as a whole. */
   /* the header is sticky, so a project linked to by #id must clear it */
   /* The case studies are linked from the home page, so they land the same way.
      .caseblock has no padding of its own, but .casehead inside it has 3rem,
