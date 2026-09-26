@@ -392,6 +392,40 @@ fits it all. `tools/make-banner.ps1` reproduces the committed JPEG byte for
 byte, but its source photo is gitignored like the other source photography.
 Only a machine that has `assets/source-f1.jpg` can rebuild it.
 
+## 24 — The warehouse header gets a photo too, through a shared `.photo` class
+
+**Chosen:** a warehouse aisle by Ruchindra Gunasekara (Unsplash License,
+[GK8x_XCcDZg](https://unsplash.com/photos/large-warhause-GK8x_XCcDZg)) behind
+the warehouse case study. The scrim and text rules from decision 23 move onto
+`.casehead.photo`, and each project sets only its own image.
+
+**Rejected:** photos of server racks and cabling, a vendor's illustrated blog
+header, and copying the F1 rules under a second ID.
+
+Server hardware says on-premises, and this warehouse is serverless BigQuery,
+so the picture would describe the wrong system. The best-known of those
+photos is also among the most reused tech images there are. The illustrated
+header belonged to a training company, carried its watermark, and was very
+likely licensed stock itself: there was no right to use it, and cropping the
+watermark off would have made that worse. An aisle of racked shelving is a
+real warehouse without claiming anything about the technology.
+
+The aisle's vanishing point is centred, so the default `50% 50%` holds at
+every width with no offset, unlike the F1 car. The source is portrait
+(3024×4032), so the desktop band is cut around that point:
+`make-banner.ps1 -Src assets/source-warehouse.jpg -Out
+assets/warehouse-banner.jpg -CropTop 1390`.
+
+The contrast check turned into a general result. At a 0.62 scrim, `--ink`
+over pure white is 5.00:1 in the dark theme, and over pure black 6.54:1 in the
+light theme. No pixel can be brighter or darker than those, so the rule
+passes AA on any photo. A future photo header needs no pixel sampling, only a
+look at the crop.
+
+**The cost:** the banner is 302 KB against the F1 banner's 118 KB. The shelves
+are dense detail and JPEG pays for it. Quality 55 only reached 230 KB, so it
+stays at the script's default of 72, the same recipe as F1.
+
 ---
 
 ## October checklist — the custom domain switch
