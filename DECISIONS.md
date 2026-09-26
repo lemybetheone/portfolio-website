@@ -394,10 +394,16 @@ Only a machine that has `assets/source-f1.jpg` can rebuild it.
 
 ## 24 — The warehouse header gets a photo too, through a shared `.photo` class
 
-**Chosen:** a warehouse aisle by Ruchindra Gunasekara (Unsplash License,
-[GK8x_XCcDZg](https://unsplash.com/photos/large-warhause-GK8x_XCcDZg)) behind
-the warehouse case study. The scrim and text rules from decision 23 move onto
+**Chosen:** a warehouse aisle by Lance Chang (Unsplash License,
+[h3pVxOIpnzk](https://unsplash.com/photos/a-large-warehouse-filled-with-lots-of-shelves-h3pVxOIpnzk))
+behind the warehouse case study, with the store sign at the end of the aisle
+blurred out. The scrim and text rules from decision 23 move onto
 `.casehead.photo`, and each project sets only its own image.
+
+The first version used a portrait aisle by Ruchindra Gunasekara
+([GK8x_XCcDZg](https://unsplash.com/photos/large-warhause-GK8x_XCcDZg)). It
+was replaced by this one, which was the first recommendation, for its
+straighter perspective and a banner a little over half the size.
 
 **Rejected:** photos of server racks and cabling, a vendor's illustrated blog
 header, and copying the F1 rules under a second ID.
@@ -411,10 +417,18 @@ watermark off would have made that worse. An aisle of racked shelving is a
 real warehouse without claiming anything about the technology.
 
 The aisle's vanishing point is centred, so the default `50% 50%` holds at
-every width with no offset, unlike the F1 car. The source is portrait
-(3024×4032), so the desktop band is cut around that point:
+every width with no offset, unlike the F1 car. The source is 6000×4000, and
+the desktop band is cut around that point:
 `make-banner.ps1 -Src assets/source-warehouse.jpg -Out
-assets/warehouse-banner.jpg -CropTop 1390`.
+assets/warehouse-banner.jpg -CropTop 692 -Blur 855,112,124,230`.
+
+The photo was taken in an IKEA store's self-serve warehouse, and a sign with
+the store's logo hangs at the vanishing point, where the eye lands first. No
+crop avoids it: the banner's band takes 70% of the photo's height and the
+sign is in the middle. `-Blur` shrinks that rectangle to one pixel per 20 and
+stretches it back, leaving a plain light panel. Both resamples need
+`WrapMode.TileFlipXY`. Without it, GDI+ blends the edge pixels with
+transparency, and the sign's text ghosted through along the panel's edge.
 
 The contrast check turned into a general result. At a 0.62 scrim, `--ink`
 over pure white is 5.00:1 in the dark theme, and over pure black 6.54:1 in the
@@ -422,9 +436,11 @@ light theme. No pixel can be brighter or darker than those, so the rule
 passes AA on any photo. A future photo header needs no pixel sampling, only a
 look at the crop.
 
-**The cost:** the banner is 302 KB against the F1 banner's 118 KB. The shelves
-are dense detail and JPEG pays for it. Quality 55 only reached 230 KB, so it
-stays at the script's default of 72, the same recipe as F1.
+**The cost:** the banner is 171 KB against the F1 banner's 118 KB, at the
+script's default quality of 72, the same recipe as F1. The first photo's
+dense shelving cost 302 KB. The blur is an edit to the photo, which the
+Unsplash License allows. It also makes `make-banner.ps1` a little more than a
+crop tool.
 
 ## 25 — The theme switch is a view transition, with the crossfade as fallback
 
