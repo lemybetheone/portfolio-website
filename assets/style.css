@@ -549,6 +549,36 @@
      the card's own 3rem of internal padding. */
   .pagehead{padding-bottom:2.5rem}
   .casehead{padding-top:3rem;padding-bottom:1rem}
+  /* The F1 header sits on a photo. The scrim is .62 of the page colour, so it
+     darkens in dark mode and lightens in light mode. The brightest pixel
+     behind the text (the white kerb, luminance .73) held --muted to about
+     2.1:1 at that strength, so the deck and the labels switch to --ink, which
+     clears 6:1 in both themes. A scrim strong enough to save --muted
+     (.82 dark, .90 light) left the photo a ghost.
+
+     isolation:isolate makes the header its own stacking context, so the
+     scrim's z-index:0 and the content's z-index:1 cannot interleave with
+     anything outside it. The top corners follow the card's.
+
+     66% rather than 50%: the car's centre is 62% across the banner. On a
+     phone the header is about 1:2, so cover shows only the middle quarter of
+     the image's width and 50% put the car half out of frame. At desktop
+     width the header is the banner's own 2.13:1 and the x value does nothing,
+     so one value serves every width without a media query. */
+  #f1 .casehead{
+    position:relative;isolation:isolate;
+    background-image:url(f1-banner.jpg);
+    background-size:cover;background-position:66% 50%;
+    border-radius:var(--r-md) var(--r-md) 0 0;
+  }
+  #f1 .casehead::before{
+    content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    border-radius:inherit;
+    background:rgba(var(--scrim-rgb),.62);
+  }
+  #f1 .casehead > *{position:relative;z-index:1}
+  #f1 .casehead .deck,
+  #f1 .casehead .meta dt{color:var(--ink)}
   /* Each case study is a card, so the page reads as two projects rather than
      one long scroll. Separation is the gap between them, so the rule that used
      to divide them goes.

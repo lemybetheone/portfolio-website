@@ -15,6 +15,7 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+.claude/
 
 # Vercel
 .vercel
@@ -41,6 +42,7 @@ assets/*.jpg
 !assets/portrait-light.jpg
 !assets/portrait-full.jpg
 !assets/portrait-full-light.jpg
+!assets/f1-banner.jpg
 
 # Source photography in other formats too.
 assets/*.jpeg
