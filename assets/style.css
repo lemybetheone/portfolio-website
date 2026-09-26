@@ -326,13 +326,45 @@
   @media (min-width:52rem){
     .rowhead{
       display:grid;grid-template-columns:2rem minmax(0,1fr) 13rem 7rem;gap:1rem;
-      padding:.5rem 0;border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+      /* matches the card's 1.1rem padding plus its 1px border, so these
+         labels sit over the columns they name */
+      padding:.5rem calc(1.1rem + 1px);
+      border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
       font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.5625rem;letter-spacing:.14em;
       text-transform:uppercase;color:var(--muted);
     }
   }
-  .prow{padding:1.5rem 0;border-bottom:1px solid var(--rule)}
-  .prow:last-of-type{border-bottom:0}
+  /* Each project is a card rather than a table row. The result-set framing
+     still comes from the query pane above, the column header strip and the
+     "two rows returned" line; what changes is that a project is now a surface
+     you can pick out at a glance, which is the one thing this section wants.
+
+     Separation is the gap between cards, so the dividing rule goes. */
+  .prow{
+    position:relative;
+    padding:1.25rem 1.1rem;margin:0 0 .9rem;
+    border:1px solid var(--rule);border-radius:var(--r-md);
+    background:var(--bg);
+    box-shadow:var(--emboss);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .prow:last-of-type{margin-bottom:0}
+  /* hover:hover keeps this off touch screens, where :hover sticks after a tap */
+  @media (hover:hover){
+    .prow:hover{
+      /* 1.005, not the stack's 1.02. These cards are five times wider, and the
+         same ratio would move them 18px. This matches the stack's absolute
+         movement, about 4px, so the two read as one gesture rather than one
+         number. */
+      transform:scale(1.005);
+      box-shadow:var(--emboss-hover);
+      z-index:1;
+    }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .prow{transition:none}
+    .prow:hover{transform:none}
+  }
   .ptop{display:grid;gap:.85rem}
   @media (min-width:52rem){
     .ptop{grid-template-columns:2rem minmax(0,1fr) 13rem 7rem;gap:1rem;align-items:start}
