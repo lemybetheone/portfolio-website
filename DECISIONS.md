@@ -203,6 +203,22 @@ because the file existed locally and was excluded from the repository.
 
 **Check `git add -n`, not `git check-ignore`,** when a negation is involved.
 
+**Each variant has its own source document.** The public copy used to be made
+by deleting the phone number from the one `.docx`, exporting, and putting it
+back. That holds until the one time it is forgotten, and then a mobile number
+is on the open web and indexed. `LEMUEL_CALINOG_CV_public.docx` is now the
+public source and `LEMUEL_CALINOG_CV.docx` the private one, so an export is
+only ever an export. The `*.docx` rule covers both, so neither is published.
+
+Do not tidy the second file away as a duplicate. It is the duplication that
+makes the mistake impossible.
+
+**Verify the exported file, not the process.** Before publishing, check the PDF
+itself: the phone number absent from the decompressed text rather than from a
+raw byte scan, which cannot see inside compressed streams, and each link a real
+URI annotation rather than plain text. A PDF export can silently drop
+hyperlinks depending on the option chosen.
+
 ---
 
 ## 14 — Open Graph URLs are absolute, and that has a cost
@@ -508,7 +524,8 @@ Five things had to change together. What happened to each:
 
 1. `index.html` — `og:url` and `og:image` now `https://www.lemuelcalinog.com`
 2. `projects.html` — the same two, now on the custom domain
-3. The CV — still to do, if the URL is going on it
+3. The CV — done. `lemuelcalinog.com` is the first link in the contact
+   line of both variants, as a real annotation in the exported PDFs
 4. LinkedIn — still to do: Featured section and the Contact info website entry
 5. Vercel — the `.vercel.app` address is kept and still resolves
 
