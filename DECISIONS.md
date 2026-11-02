@@ -469,21 +469,59 @@ block in `style.css`, so reverting it is one commit.
 
 ---
 
-## October checklist — the custom domain switch
+## 26 — lemuelcalinog.com, with www as the canonical host
 
-Five things change together. Missing any one leaves a broken or inconsistent
-link somewhere:
+**Chosen:** registered at Cloudflare, pointed at Vercel with two CNAME records,
+`www` canonical and the apex redirecting to it.
 
-1. `index.html` — `og:url` and `og:image` (decision 14)
-2. `projects.html` — `og:url` and `og:image` (decision 14)
-3. The CV — add the site URL if it is going on there
-4. LinkedIn — Featured section and Contact info website entry
-5. Vercel — keep the `.vercel.app` address redirecting, do not remove it
+**Rejected:** buying the domain through Vercel, which needs no DNS records at
+all; and keeping the `.vercel.app` address as the only one.
 
-That is four absolute URLs across two files, not two across one, which is what
-this list said until the second page was added. Rather than trust the count,
-find them:
+Vercel resells domains and would have handled the DNS itself, which is a real
+saving in steps. Cloudflare sells at cost, about eight dollars a year less, and
+leaves the domain portable. The DNS work was two records.
+
+**www rather than the apex.** Vercel recommends it and prompts for it. The apex
+returns a 308 to `www`, so `www` is the address the Open Graph tags must carry:
+a card built from the apex would advertise a URL that redirects.
+
+**Both records are CNAMEs, including the one at the apex.** Standard DNS forbids
+that, which is why most guides use an A record there. Cloudflare flattens an
+apex CNAME into A records at query time, so Vercel can hand over the better
+record. Verified: the apex resolves to 216.198.79.1 and 64.29.17.1.
+
+**Proxy stays disabled on both records**, the grey cloud rather than the orange.
+Cloudflare's dashboard argues for proxying, and it is wrong here. Vercel already
+provides the CDN, the caching and the certificate, and the two fight over
+certificate issuance. The usual symptom is a redirect loop or a certificate
+error that appears days later.
+
+**Do not remove the `.vercel.app` address.** Vercel keeps it alive and anything
+already shared keeps working.
+
+---
+
+
+## The custom domain switch — done 2 November 2026
+
+Five things had to change together. What happened to each:
+
+1. `index.html` — `og:url` and `og:image` now `https://www.lemuelcalinog.com`
+2. `projects.html` — the same two, now on the custom domain
+3. The CV — still to do, if the URL is going on it
+4. LinkedIn — still to do: Featured section and the Contact info website entry
+5. Vercel — the `.vercel.app` address is kept and still resolves
+
+Verified after the change: DNS resolves on both hosts, the apex 308s to `www`,
+`/`, `/projects.html` and `/assets/og.png` all return 200 over HTTPS, and the
+certificate is issued with HSTS set.
+
+If the domain ever changes again, do not trust this list's count. Find them:
 
 ```
-grep -rn 'lemybetheone\.vercel\.app' index.html projects.html
+grep -rn 'lemuelcalinog\.com' index.html projects.html
 ```
+
+**One left for LinkedIn:** it caches preview cards for days. Run the new URL
+through LinkedIn's Post Inspector to force a refetch, or the old card keeps
+appearing.
